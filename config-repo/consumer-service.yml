@@ -1,0 +1,25 @@
+server:
+  port: 10000
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://discovery:8061/eureka/
+
+feign:
+  hystrix:
+    enabled: true
+
+hystrix: 
+  command: 
+    HelloClient#hello():
+      execution: 
+        isolation:
+          thread:
+            timeoutInMilliseconds: 500
+      circuitBreaker:
+        requestVolumeThreshold: 3
+      
+logging:
+  pattern: 
+    console: "%d{yyyy-MM-dd HH:mm:ss} ${LOG_LEVEL_PATTERN:-%5p} %m%n"
